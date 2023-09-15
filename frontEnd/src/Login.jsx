@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './style.css';
 import axios from 'axios';
+import Employee from './Employee'
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
@@ -9,6 +10,7 @@ export default function Login() {
     password: '',
   })
   const navigate=useNavigate();
+  axios.defaults.withCredentials=true;
   const [error,setError]=useState('')
 
   const handleSubmit = (e) => {
@@ -65,7 +67,7 @@ export default function Login() {
             Log In
           </button>
           <p>You agree to our terms and policies</p>
-          <button className="btn btn-secondary border w-100 rounded-0">Create Account</button>
+          
         </form>
       </div>
     </div>

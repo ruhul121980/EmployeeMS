@@ -8,28 +8,31 @@ function AddEmployee() {
     email: '',
     password: '',
     address: '',
-    image:'',
+    salary:'',
+    image:''
   })
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const navigate=useNavigate()
+  const handleSubmit = (event) => {
+    event.preventDefault();
     const formdata = new FormData();
     formdata.append("name", data.name);
     formdata.append("email", data.email);
     formdata.append("password", data.password);
     formdata.append("address", data.address);
+    formdata.append("salary", data.salary);
     formdata.append("image", data.image);
   
     axios.post('http://localhost:8081/create', formdata)
-      .then((res) => {
-        console.log('Response:', res.data); 
+      .then(res=>{
+        navigate('/employee')
       })
-      .catch(err => console.log(err)); 
+      .catch(err=>console.log(err)); 
       
   }
   
-
   return (
-    <div className='d-flex-column align-items-center pt-5'>
+    
+    <div className='d-flex flex-column align-items-center pt-3'>
       <h2>Add Employee</h2>
       <form className="row g-3 w-50" onSubmit={handleSubmit}>
       <div className="col-12">
@@ -39,7 +42,7 @@ function AddEmployee() {
             className="form-control"
             id="inputName" autoComplete='off'
             placeholder='Enter name'
-            onChange={e => setData({ ...data, name: e.target.value })}
+            onChange={e => setData({ ...data, name: e.target.value })}required
           />
         </div>
 
@@ -50,7 +53,7 @@ function AddEmployee() {
             className="form-control"
             id="inputEmail4" autoComplete='off'
             placeholder='Enter Email'
-            onChange={e => setData({ ...data, email: e.target.value })}
+            onChange={e => setData({ ...data, email: e.target.value })}required
           />
         </div>
 
@@ -61,9 +64,11 @@ function AddEmployee() {
             className="form-control"
             id="inputPassword4"
             placeholder='Enter Password' autoComplete='off'
-            onChange={e => setData({ ...data, password: e.target.value })}
+            onChange={e => setData({ ...data, password: e.target.value })}required
           />
         </div>
+
+        
 
         <div className="col-12">
           <label htmlFor="inputAddress" className="form-label">Address</label>
@@ -72,7 +77,17 @@ function AddEmployee() {
             className="form-control"
             id="inputAddress"
             placeholder='Enter Address' autoComplete='off'
-            onChange={e => setData({ ...data, address: e.target.value })}
+            onChange={e => setData({ ...data, address: e.target.value })}required
+          />
+        </div>
+        <div className="col-12">
+          <label htmlFor="inputSalary" className="form-label">Salary</label>
+          <input
+            type="text"
+            className="form-control"
+            id="inputSalary" autoComplete='off'
+            placeholder='Enter Salary'
+            onChange={e => setData({ ...data, salary: e.target.value })}
           />
         </div>
 
@@ -82,7 +97,7 @@ function AddEmployee() {
             type="file"
             className="form-control"
             id="inputGroupFile01"
-            onChange={e => setData({ ...data, image: e.target.files[0] })}
+            onChange={e => setData({ ...data, image: e.target.files[0] })}required
           />
         </div>
         
@@ -91,6 +106,7 @@ function AddEmployee() {
         </div>
       </form>
     </div>
+    
   );
 }
 

@@ -1,8 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet,useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Dashboard() {
+
+const navigate=useNavigate()
+axios.defaults.withCredentials=true;
+useEffect(()=>{
+  axios.get(`http://localhost:8081/dashboard`)
+  
+  .then(res=>{
+    if(res.data.Status==="Success"){
+      if(res.data.role==="admin"){
+        navigate('/')
+
+      }else{
+        navigate('/employeedetail')
+
+      }
+      
+
+    }else{
+      navigate('/start')
+      
+      
+    }
+
+  })
+},[])
+
+const handleLogout=()=>{
+  axios.get(`http://localhost:8081/logout`)
+  .then(res=>{
+    navigate('/start')
+
+  }).catch(err=>console.log(err));
+}
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">
@@ -23,11 +57,11 @@ export default function Dashboard() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="profile" className="nav-link px-0 align-middle">
-                  <i className="fs-4 bi-table"></i> <span className="ms-1 d-none d-sm-inline">Profile</span>
+                <Link to="documents" className="nav-link px-0 align-middle">
+                  <i className="fs-4 bi-table"></i> <span className="ms-1 d-none d-sm-inline">Store Vital Documents</span>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li onClick={handleLogout} className="nav-item">
                 <Link to="logout" className="nav-link px-0 align-middle">
                   <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Logout</span>
                 </Link>
