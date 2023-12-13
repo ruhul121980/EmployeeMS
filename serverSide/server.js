@@ -36,6 +36,8 @@ const upload = multer({
     storage: storage
 })
 
+
+
 con.connect(function(err) {
     if(err) {
         console.log("Error in Connection");
@@ -52,6 +54,25 @@ app.get('/getEmployee', (req, res) => {
     })
 })
 
+app.get('/getLeave', (req, res) => {
+    const sql = "SELECT * FROM application";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Error: "Get employee error in sql"});
+        return res.json({Status: "Success", Result: result})
+    })
+})
+
+
+
+
+app.get('/getDocuments', (req, res) => {
+    const sql = "SELECT * FROM document";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Error: "Get employee error in sql"});
+        return res.json({Status: "Success", Result: result})
+    })
+})
+
 app.get('/get/:id', (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM employee where id = ?";
@@ -61,11 +82,49 @@ app.get('/get/:id', (req, res) => {
     })
 })
 
+app.get('/getLeaveHistory/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM application where id = ?";
+    con.query(sql, [id], (err, result) => {
+        if(err) return res.json({Error: "Get application error in sql"});
+        return res.json({Status: "Success", Result: result})
+    })
+})
+
 app.put('/update/:id', (req, res) => {
     const id = req.params.id;
     const sql = "UPDATE employee set salary = ? WHERE id = ?";
     con.query(sql, [req.body.salary, id], (err, result) => {
         if(err) return res.json({Error: "update employee error in sql"});
+        return res.json({Status: "Success"})
+    })
+})
+
+// API to approve or reject a leave request
+
+app.put('/leave-request/:id', (req, res) => {
+  const  id  = req.params.id;
+  const status = req.body.status;
+  const sql = "UPDATE application SET status = ? WHERE id = ?";
+  con.query(sql, [status, id], (err, results) => {
+    if (err) {
+      console.error('Error updating leave request status:', err);
+      res.status(500).json({ message: 'Error updating leave request status' });
+    } else {
+      res.json({ message: 'Leave request status updated' });
+    }
+  });
+});
+
+  
+
+
+
+app.delete('/deletedocument/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "Delete FROM document WHERE id = ?";
+    con.query(sql, [id], (err, result) => {
+        if(err) return res.json({Error: "delete employee error in sql"});
         return res.json({Status: "Success"})
     })
 })
@@ -181,6 +240,40 @@ app.post('/create',upload.single('image'), (req, res) => {
         })
     } )
 })
+
+app.post('/leaveData', (req, res) => {
+    const sql = "INSERT INTO `application` (`name`, `id`, `reason`) VALUES (?, ?, ?)";
+
+    
+
+    const values = [
+        req.body.name,
+        req.body.id,
+        req.body.reason,
+    ];
+
+    con.query(sql, values, (err, result) => {
+        if (err) return res.json({ Error: "Inside leave query" });
+        return res.json({ Status: "Success" });
+    });
+});
+
+
+
+app.post('/documents',upload.single('image'), (req, res) => {
+    const sql = "INSERT INTO document (`id`,`image`) VALUES (?)";
+    
+        const values = [
+            req.body.id,
+            
+            req.file.filename
+        ]
+        con.query(sql, [values], (err, result) => {
+            if(err) return res.json({Error: "Inside singup query"});
+            return res.json({Status: "Success"});
+        })
+    } )
+
 
 app.listen(8081, ()=> {
     console.log("Running");

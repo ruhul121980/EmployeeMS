@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Link, Outlet,useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 export default function Dashboard() {
 
 const navigate=useNavigate()
@@ -20,10 +19,8 @@ useEffect(()=>{
 
       }
       
-
     }else{
       navigate('/start')
-      
       
     }
 
@@ -56,6 +53,15 @@ const handleLogout=()=>{
                   <i className="fs-4 bi-speedometer2"></i> <span className="ms-1 d-none d-sm-inline">Manage Employee</span>
                 </Link>
               </li>
+
+              <li className="nav-item">
+                <Link to="leaverequest" className="nav-link px-0 align-middle">
+                  <i className="fs-4 bi-speedometer2"></i> <span className="ms-1 d-none d-sm-inline">Leave Request</span>
+                </Link>
+              </li>
+
+
+
               <li className="nav-item">
                 <Link to="documents" className="nav-link px-0 align-middle">
                   <i className="fs-4 bi-table"></i> <span className="ms-1 d-none d-sm-inline">Store Vital Documents</span>

@@ -43,6 +43,7 @@ export default function Employee() {
         <thead>
           <tr>
             <th>Name  </th>
+            <th>Id  </th>
             <th>Image</th>
             <th>email</th>
             <th>Address</th>
@@ -55,6 +56,7 @@ export default function Employee() {
           {data.map((employee,index)=>{
            return <tr key={index}>
               <td>{employee.name}</td>
+              <td>{employee.id}</td>
               <td>{
                <img src={'http://localhost:8081/images/'+employee.image} alt="" className='employee_image' />
 

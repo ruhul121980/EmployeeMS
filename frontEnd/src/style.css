@@ -17,11 +17,59 @@
     border-radius: 50%;
 }
 
+/* styles.css */
+
 .empImg {
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-}
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+  
 .document{
     color:blue;
 }
+.home{
+    background: url('images/employee.webp');
+    background: linear-gradient(rgba(11, 11, 11, 0.5), rgba(10, 10, 10, 0.5)), url("/images/employee.webp");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 120%;
+}
+.homeForm {
+    background-color: rgba(1, 32, 93, 0.6);
+    color: white;
+}
+
+
+.centered-heading {
+    text-align: center;
+    color: #007bff; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    animation: running-line 20s linear infinite;  
+  }
+  
+  @keyframes running-line {
+    0% {
+      transform: translateX(50%); 
+    }
+    100% {
+      transform: translateX(-50%); 
+    }
+  }
+
+
+  /* styles.css */
+
+.empInfo {
+    margin-top: 10px;    /* Adjust the top margin as needed */
+    margin-right: 20px;  /* Adjust the right margin as needed */
+    margin-bottom: 10px; /* Adjust the bottom margin as needed */
+    margin-left: 20px;   /* Adjust the left margin as needed */
+    background-color: #f0f0f0; /* Optional: Set a background color */
+    padding: 15px; /* Optional: Set padding to create some space within the div */
+  }
+  
+  
+  
